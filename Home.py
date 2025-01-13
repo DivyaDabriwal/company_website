@@ -1,5 +1,5 @@
 import streamlit as st
-import csv
+import pandas
 
 st.set_page_config(layout='wide')
 
@@ -20,28 +20,24 @@ st.header('Our Team')
 
 col1, col2, col3 = st.columns(3)
 
-csv_dict_list = []
-with open('data.csv') as file:
-    csv_data = csv.DictReader(file, delimiter=',')
-    for i in csv_data:
-        csv_dict_list.append(i)
+df = pandas.read_csv('data.csv')
 
 with col1:
-    for row in csv_dict_list[:4]:
+    for index, row in df[:4].iterrows():
         full_name = f"{row['first name']} {row['last name']}".title()
         st.subheader(full_name)
         st.write(row['role'])
         st.image('images/' + row['image'])
 
 with col2:
-    for row in csv_dict_list[4:8]:
+    for index, row in df[4:8].iterrows():
         full_name = f"{row['first name']} {row['last name']}".title()
         st.subheader(full_name)
         st.write(row['role'])
         st.image('images/' + row['image'])
 
 with col3:
-    for row in csv_dict_list[8:]:
+    for index, row in df[8:].iterrows():
         full_name = f"{row['first name']} {row['last name']}".title()
         st.subheader(full_name)
         st.write(row['role'])
